@@ -1,8 +1,6 @@
 # Distributed-File-System
 
-
-Shreenivas Pai N -78236469 
-Harshal Patil -55528581
+Harshal Patil -55528581                                   Shreenivas Pai N -78236469
 
 
 
