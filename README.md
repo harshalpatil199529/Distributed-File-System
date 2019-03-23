@@ -4,16 +4,19 @@ Harshal Patil -55528581                                   Shreenivas Pai N -7823
 
 
 
-
 Problem Statement
+
 This project implements a distributed file system where in there is a client/server based architecture. It includes single robust remote meta server to store all the meta data of the file system and multiple data servers which stores the data using the concepts of distributed file system like redundancy and fault tolerance. Redundancy reduces the load by equally distributing the data among the other servers. In this project 2 replicas along with one original copy is stored on multiple data servers in round-robin fashion, which ensures that, if n-2 servers are alive the file system would still be able to retrieve the data correctly in proper order. In order to maintain the correctness and validity of the data an error correction method using checksum is implemented. Whenever the data is read, the file system 1st validates the checksum, if the checksum matches the data is fetched correctly. If the checksum fails to match the data is to be retrieved from one of the redundant replica which is stored in the next server in round-robin fashion. In case, if the 1st replica fails to match the checksum, 2nd replica is used to fetch the data along with the validation using checksum. Additionally the advantage of redundant distributed file system is that even if the server fails, client doesn’t have to wait until the failed server becomes active again to read the data. It still can fetch the data from the replicas stored on the other servers. The file system also implements a persistent storage wherein we create a file of all the data for every data server and if a server fails it can recover the complete state as of before the crash from its persistent storage file. The main database is in the disk and the file system always writes to the disk first before returning an RPC call. For implementing the persistent storage the python Shelve has benn used. Even when the persistent file fails and the server is crashed the file system can still retrieve the data from the replicas and create the persistent file and restore its state.
 Design
 This project implements a distributed file system where in there is a client/server based architecture. It includes single robust remote meta server to
 store all the meta data of the file system and multiple data servers which stores the data using the concepts of distributed file system like redundancy and fault tolerance. Redundancy reduces the load by equally distributing the data among the other servers. In this project 2 replicas along with one original copy is stored on multiple data servers in round-robin fashion, which ensures that, if n-2 servers are alive the file system would still be able to retrieve the data correctly in proper order. In order to maintain the correctness and validity checksum is used by calculating its hash value.
+
 This project consists of 3 main files
+
 1. Metaserver.py
 2. Dataserver.py
 3. DistributedFS.py
+
 Meta server consists of metadata of all files and directories. In this project we consider the meta server to robust and it never fails. It consists of two dicts. One for storing the meta files and another for storing the parent and contents of the directory.
 Dataserver are multiple and project can support up to 5 dataservers assuming dataservers are not robust we created the redundant file system which keeps replicas of the original data block and it is stored in the next adjacent servers in round robin fashion. The dataserver consists of 3 dicts to store original, replica1 and replica2. Also, to maintain the validity of the data checksum is used. 3 dicts are used for storing checksum original, replica1 and replica 2. Each dataserver has persistent storage which stores all the data of corresponding server in disk. Whenever the dataserver fails, the data is retrieved from this storage. There is a chance that the persistence storage fails and that can be recovered from the redundant copies, and this will be done by the client. Shelve function is used to create the “data store”.
 DistributedFS.py:
