@@ -1,6 +1,8 @@
 # Distributed-File-System
 
-Harshal Patil -55528581                                   Shreenivas Pai N -78236469
+Harshal Patil -55528581                                   
+
+Shreenivas Pai N -78236469
 
 
 
@@ -31,8 +33,47 @@ When a read function is called for a path, it will first check the availability 
 3. Rename
 Rename will start with checking of servers and if all the servers are available it will proceed. The hash value for both the old and new path is calculated and corresponding servers are found to be replaced. If move or rename is called corresponding functionality is performed. It will update the path in metserver and dataserver. When the path is updated in dataserver the server position is also updated i.e it is placed in the exact position where the hash value is calculated for the newpath.
 4. Symlink symlink is also called soft link it is linked to the name of a file. When a symlink to a file is created anywhere the contents of the original files can be read properly. symlink can be moved from directory to directory without affecting the contents. symlink can also be deleted and it results in no changes to the original file.
-Test cases passed 1.Create a text file -1.txt 2. Read the text file –cat 1.txt 3.copy the data from 1.txt to 2.txt 4.Read the copied file 2.txt 5. Append to the copied file 6. Read the file you just appended to 7.rename the file 2.txt to 3.txt 8.create a directory in root ‘a’ 9. Go inside the directory and create a text file 4.txt 10.move the the file 3.txt to the directory ‘a’ 11.ls in the directory ‘a’ is showing 4.txt and 3.txt 12.create a empty directory in root ‘b’ 13.move the directory a to b 14.go inside directory b and perform ls it shows 4.txt and 3.txt 15.create another directory c in the root and create a file inside it. 16.move the directoy ‘b’ to ‘c’ it shows the contents of both b and also contain the directory b. 17.Rename the directory ‘c’ to ‘d’ 18.delete an empty directory using rmdir it should get deleted . 19.delete a directory with contents using rmdir it should give an error. 20. delete a directory with contents using rm-rf should delete the directory.
-21. create a symlink in the directory of a file that is in root. 22. check for the source of the symlink 23. move the symlink to any other directory. 24. create a directory called ‘st_mode’ and check its stats. 25. change the ownership of a directory 26.change the ownership of a file 27.change the permissions given to a file. 28. truncate the text file should reduce the length of the file. 29.truncate the text file to size that is larger than the file size the contents should remain the same. 30.truncate the file size to 0 it should not show any contents now. 31.crash any one server and try to read data it should be able to read the data. 32. crash any 2 servers and try to read data it should be able to read the data. 33.crash 3 servers and try to read it should wait until N-2 servers are alive. 34.crash a server and write data it should wait for all the servers to alive. 35.get all the server up and the write should automatically be completed. 36.delete a persistent storage file and crash the server and bring it back up again it should be able to read normally and will remake the data store file. 37.crash a server and delete the data store file and do the write operation it should wait for all the severs to be up. 38. get the servers back up again and the write operation should be completed and the data store should be created by itself.
+
+Test cases passed 
+1.Create a text file -1.txt 
+2. Read the text file –cat 1.txt 
+3.copy the data from 1.txt to 2.txt 
+4.Read the copied file 2.txt 
+5. Append to the copied file 
+6. Read the file you just appended to 
+7.rename the file 2.txt to 3.txt 
+8.create a directory in root ‘a’ 
+9. Go inside the directory and create a text file 4.txt 
+10.move the the file 3.txt to the directory ‘a’ 
+11.ls in the directory ‘a’ is showing 4.txt and 3.txt 
+12.create a empty directory in root ‘b’ 
+13.move the directory a to b 
+14.go inside directory b and perform ls it shows 4.txt and 3.txt 
+15.create another directory c in the root and create a file inside it. 
+16.move the directoy ‘b’ to ‘c’ it shows the contents of both b and also contain the directory b. 
+17.Rename the directory ‘c’ to ‘d’ 
+18.delete an empty directory using rmdir it should get deleted. 
+19.delete a directory with contents using rmdir it should give an error. 
+20. delete a directory with contents using rm-rf should delete the directory.
+21. create a symlink in the directory of a file that is in root. 
+22. check for the source of the symlink 
+23. move the symlink to any other directory. 
+24. create a directory called ‘st_mode’ and check its stats. 
+25. change the ownership of a directory 
+26.change the ownership of a file 
+27.change the permissions given to a file. 
+28. truncate the text file should reduce the length of the file. 
+29.truncate the text file to size that is larger than the file size the contents should remain the same. 
+30.truncate the file size to 0 it should not show any contents now. 
+31.crash any one server and try to read data it should be able to read the data. 
+32. crash any 2 servers and try to read data it should be able to read the data. 
+33.crash 3 servers and try to read it should wait until N-2 servers are alive. 
+34.crash a server and write data it should wait for all the servers to alive. 
+35.get all the server up and the write should automatically be completed. 
+36.delete a persistent storage file and crash the server and bring it back up again it should be able to read normally and will remake the data store file. 
+37.crash a server and delete the data store file and do the write operation it should wait for all the severs to be up. 
+38. get the servers back up again and the write operation should be completed and the data store should be created by itself.
+
 Conclusion
-The Distributed file system has been successfully implemented. The filesystem can successfully perform all the basic operations like read, write, truncate, append, create, move, rename and others. The file system can support N=4 as well as N=5 data servers. Successfully able to store the data of the file on multiple data servers in round robin fashion. The system has also implemented checksum for ensuring the validity of the data. Even if up to 2 servers fail and crash at the same time the client is able to read all the data stored on the data
-servers, hence redundancy has been implemented successfully. The file system also implements a persistent storage wherein if any server crashes and after a certain period comes back alive the server is able to retrieve its complete state before resuming operation from the persistent storage. The file system is also capable of handling a case where the persistent storage fails. The filesystem is successfully able to check if the data received in the file is corrupt even when there is one data corruption per server in the same path in non adjacent server as well as corruption of multiple unique paths in different data servers. Once the file system knows that the data is corrupted it updates the data servers with the correct values from the replicas. Whenever a one or two servers are down the file system can do the read operation but blocks all write operation in case of server failures.
+
+The Distributed file system has been successfully implemented. The filesystem can successfully perform all the basic operations like read, write, truncate, append, create, move, rename and others. The file system can support N=4 as well as N=5 data servers. Successfully able to store the data of the file on multiple data servers in round robin fashion. The system has also implemented checksum for ensuring the validity of the data. Even if up to 2 servers fail and crash at the same time the client is able to read all the data stored on the data servers, hence redundancy has been implemented successfully. The file system also implements a persistent storage wherein if any server crashes and after a certain period comes back alive the server is able to retrieve its complete state before resuming operation from the persistent storage. The file system is also capable of handling a case where the persistent storage fails. The filesystem is successfully able to check if the data received in the file is corrupt even when there is one data corruption per server in the same path in non adjacent server as well as corruption of multiple unique paths in different data servers. Once the file system knows that the data is corrupted it updates the data servers with the correct values from the replicas. Whenever a one or two servers are down the file system can do the read operation but blocks all write operation in case of server failures.
