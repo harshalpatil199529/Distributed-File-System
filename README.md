@@ -18,10 +18,10 @@ Meta server consists of metadata of all files and directories. In this project w
 Dataserver are multiple and project can support up to 5 dataservers assuming dataservers are not robust we created the redundant file system which keeps replicas of the original data block and it is stored in the next adjacent servers in round robin fashion. The dataserver consists of 3 dicts to store original, replica1 and replica2. Also, to maintain the validity of the data checksum is used. 3 dicts are used for storing checksum original, replica1 and replica 2. Each dataserver has persistent storage which stores all the data of corresponding server in disk. Whenever the dataserver fails, the data is retrieved from this storage. There is a chance that the persistence storage fails and that can be recovered from the redundant copies, and this will be done by the client. Shelve function is used to create the “data store”.
 DistributedFS.py:
 The client will support most of the functionalities that is supported by the Fuse file system. And some of them are explained below.
+
 1. Write
 When a write function is called the client will first check the availability of the server and if all the servers are alive it will proceed to write else it will wait until all the servers are alive. To check this functionality a separate function is written. When all the servers are alive it will get the
 data from the respective server which is calculated using hash function. This hash function always will return a different value for different path. Write is done 8 bytes at a time and stored as list in the server. Same set of data is written in replica 1 and replica 2 in their respective servers. Alongside checksum is calculated and updated in respective server. Append is also included in write functionality. Separate function is used to do truncate. Following flowchart will give a flow of write operation.
-
 
 2. Read
 When a read function is called for a path, it will first check the availability on n-2 servers and if available it will proceed. It will calculate the hash for path and decide the server to read. If the calculated server is alive it will check for checksum. If the checksum is validated it will return. If it fails to validate the checksum or if the server is not alive it will go for the replicas of it and do the same.
