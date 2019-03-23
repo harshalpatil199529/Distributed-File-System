@@ -1,8 +1,12 @@
 # Distributed-File-System
 
-DISTRIBUTED FILE SYSTEM
-Shreenivas Pai N -78236469 Harshal Patil -55528581
-Graduate Graduate
+
+Shreenivas Pai N -78236469 
+Harshal Patil -55528581
+
+
+
+
 Problem Statement
 This project implements a distributed file system where in there is a client/server based architecture. It includes single robust remote meta server to store all the meta data of the file system and multiple data servers which stores the data using the concepts of distributed file system like redundancy and fault tolerance. Redundancy reduces the load by equally distributing the data among the other servers. In this project 2 replicas along with one original copy is stored on multiple data servers in round-robin fashion, which ensures that, if n-2 servers are alive the file system would still be able to retrieve the data correctly in proper order. In order to maintain the correctness and validity of the data an error correction method using checksum is implemented. Whenever the data is read, the file system 1st validates the checksum, if the checksum matches the data is fetched correctly. If the checksum fails to match the data is to be retrieved from one of the redundant replica which is stored in the next server in round-robin fashion. In case, if the 1st replica fails to match the checksum, 2nd replica is used to fetch the data along with the validation using checksum. Additionally the advantage of redundant distributed file system is that even if the server fails, client doesn’t have to wait until the failed server becomes active again to read the data. It still can fetch the data from the replicas stored on the other servers. The file system also implements a persistent storage wherein we create a file of all the data for every data server and if a server fails it can recover the complete state as of before the crash from its persistent storage file. The main database is in the disk and the file system always writes to the disk first before returning an RPC call. For implementing the persistent storage the python Shelve has benn used. Even when the persistent file fails and the server is crashed the file system can still retrieve the data from the replicas and create the persistent file and restore its state.
 Design
